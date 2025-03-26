@@ -18,7 +18,6 @@ public class Vehicle {
         this.endRoad = end;
         this.vehicleId = vehicleId;
     }
-
     public Turn getTurn(){
         if (endRoad == startRoad.getOpposite()) {
             return Turn.STRAIGHT;

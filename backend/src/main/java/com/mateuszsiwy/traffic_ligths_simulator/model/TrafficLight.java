@@ -6,7 +6,6 @@ public class TrafficLight {
     public enum State {
         RED, YELLOW, GREEN, GREEN_ARROW;
     }
-
     @Getter
     private State state;
     @Getter
@@ -19,16 +18,13 @@ public class TrafficLight {
         this.direction = direction;
         this.state = State.RED;
     }
-
     public void setState(State state) {
         this.state = state;
         this.timer = 0;
     }
-
     public boolean isGreen() {
         return state == State.GREEN || state == State.GREEN_ARROW;
     }
-
     public void update() {
         timer++;
         if (timer >= greenDuration && state == State.GREEN) {
@@ -42,9 +38,7 @@ public class TrafficLight {
             timer = 0;
         }
     }
-
     public void adjustGreenLightDuration(int numOfCars) {
         this.greenDuration = Math.min(this.greenDuration, numOfCars * 5);
     }
-
 }
