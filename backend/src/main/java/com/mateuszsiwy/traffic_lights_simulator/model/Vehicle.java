@@ -1,6 +1,7 @@
 package com.mateuszsiwy.traffic_lights_simulator.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class Vehicle {
     public enum Turn {
@@ -12,6 +13,9 @@ public class Vehicle {
     private Direction startRoad;
     @Getter
     private Direction endRoad;
+    @Getter
+    @Setter
+    private int weight = 1;
 
     public Vehicle(String vehicleId, Direction start, Direction end) {
         this.startRoad = start;
@@ -29,5 +33,8 @@ public class Vehicle {
         }else {
             return Turn.RIGHT;
         }
+    }
+    public void increaseWeight(){
+        weight*=2;
     }
 }

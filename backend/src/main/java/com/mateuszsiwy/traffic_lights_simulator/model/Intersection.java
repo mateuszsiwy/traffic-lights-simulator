@@ -26,14 +26,16 @@ public class Intersection {
     }
     public List<Vehicle> step(){
         List<Vehicle> leftVehicles = new ArrayList<>();
+
         for(Road road : roads.values()){
             leftVehicles.addAll(road.processTraffic());
         }
-
         for (Road road : roads.values()) {
             road.getTrafficLight().update();
         }
-
+        for (Road road: roads.values()){
+            road.updateVehicleWeights();
+        }
         return leftVehicles;
     }
 }

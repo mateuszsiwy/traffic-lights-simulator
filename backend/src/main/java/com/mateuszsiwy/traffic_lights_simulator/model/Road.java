@@ -26,6 +26,12 @@ public class Road {
     public int getNumberOfVehicles() {
         return vehicles.size();
     }
+    public int getTotalWeight() {
+        return vehicles.stream().mapToInt(Vehicle::getWeight).sum();
+    }
+    public void updateVehicleWeights() {
+        vehicles.forEach(Vehicle::increaseWeight);
+    }
     public List<Vehicle> processTraffic(){
         List<Vehicle> leftVehicles = new ArrayList<>();
 

@@ -12,19 +12,19 @@ public class IntelligentTrafficLights {
     public void updateTrafficLights(Intersection intersection) {
         Map<Direction, Road> roads = intersection.getRoads();
 
-        Direction directionWithMostVehicles = null;
-        int maxVehicles = -1;
+        Direction directionWithHighestWeight = null;
+        int maxWeight = -1;
 
         for (Map.Entry<Direction, Road> entry : roads.entrySet()) {
             Road road = entry.getValue();
-            int numOfVehicles = road.getNumberOfVehicles();
+            int weight = road.getTotalWeight();
 
-            if (numOfVehicles > maxVehicles) {
-                maxVehicles = numOfVehicles;
-                directionWithMostVehicles = entry.getKey();
+            if (weight > maxWeight) {
+                maxWeight = weight;
+                directionWithHighestWeight = entry.getKey();
             }
 
-            road.getTrafficLight().adjustGreenLightDuration(numOfVehicles);
+            road.getTrafficLight().adjustGreenLightDuration(road.getNumberOfVehicles());
         }
 
         boolean allRed = true;
@@ -34,10 +34,10 @@ public class IntelligentTrafficLights {
                 break;
             }
         }
-        if (allRed && directionWithMostVehicles != null) {
-            roads.get(directionWithMostVehicles).getTrafficLight().setState(TrafficLight.State.GREEN);
+        if (allRed && directionWithHighestWeight != null) {
+            roads.get(directionWithHighestWeight).getTrafficLight().setState(TrafficLight.State.GREEN);
 
-            Direction oppositeDirection = directionWithMostVehicles.getOpposite();
+            Direction oppositeDirection = directionWithHighestWeight.getOpposite();
             if (roads.get(oppositeDirection).getNumberOfVehicles() > 0) {
                 roads.get(oppositeDirection).getTrafficLight().setState(TrafficLight.State.GREEN);
             }

@@ -13,6 +13,7 @@ import java.util.Map;
 
 @AllArgsConstructor
 public class Simulation {
+    @Getter
     private Intersection intersection;
     private IntelligentTrafficLights intelligentTrafficLights;
     @Getter
