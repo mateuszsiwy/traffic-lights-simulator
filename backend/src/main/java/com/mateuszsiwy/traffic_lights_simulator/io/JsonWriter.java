@@ -25,6 +25,11 @@ public class JsonWriter {
             }
 
             stepStatusNode.set("leftVehicles", leftVehiclesNode);
+            ArrayNode crossedPedestriansNode = mapper.createArrayNode();
+            for (String pedestrianId : stepStatus.get("crossedPedestrians")) {
+                crossedPedestriansNode.add(pedestrianId);
+            }
+            stepStatusNode.set("crossedPedestrians", crossedPedestriansNode);
             stepStatusesNode.add(stepStatusNode);
         }
 

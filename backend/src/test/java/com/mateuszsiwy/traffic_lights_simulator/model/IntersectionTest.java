@@ -30,7 +30,8 @@ public class IntersectionTest {
         trafficLight.setState(TrafficLight.State.GREEN);
 
         intersection.addVehicle(vehicle);
-        List<Vehicle> leftVehicles = intersection.step();
+        IntersectionStepResult intersectionStepResult = intersection.step();
+        List<Vehicle> leftVehicles = intersectionStepResult.getLeftVehicles();
         assertFalse(road.getVehicles().contains(vehicle));
         assertTrue(leftVehicles.contains(vehicle));
     }

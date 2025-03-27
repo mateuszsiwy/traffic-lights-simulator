@@ -2,6 +2,7 @@ package com.mateuszsiwy.traffic_lights_simulator.io;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mateuszsiwy.traffic_lights_simulator.command.AddPedestrianCommand;
 import com.mateuszsiwy.traffic_lights_simulator.command.AddVehicleCommand;
 import com.mateuszsiwy.traffic_lights_simulator.command.Command;
 import com.mateuszsiwy.traffic_lights_simulator.command.StepCommand;
@@ -27,6 +28,12 @@ public class JsonReader {
                     String start = command.get("startRoad").asText();
                     String end = command.get("endRoad").asText();
                     commandList.add(new AddVehicleCommand(vehicleId, start, end));
+                    break;
+                case "addPedestrian":
+                    String pedestrianId = command.get("pedestrianId").asText();
+                    String origin = command.get("origin").asText();
+                    String destination = command.get("destination").asText();
+                    commandList.add(new AddPedestrianCommand(pedestrianId, origin, destination));
                     break;
                 case "step":
                     commandList.add(new StepCommand());

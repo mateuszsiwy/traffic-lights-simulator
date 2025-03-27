@@ -1,8 +1,6 @@
 package com.mateuszsiwy.traffic_lights_simulator.simulation;
 
-import com.mateuszsiwy.traffic_lights_simulator.model.Direction;
-import com.mateuszsiwy.traffic_lights_simulator.model.Intersection;
-import com.mateuszsiwy.traffic_lights_simulator.model.Vehicle;
+import com.mateuszsiwy.traffic_lights_simulator.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class Simulation {
@@ -23,6 +22,13 @@ public class Simulation {
         intelligentTrafficLights = new IntelligentTrafficLights();
         stepStatuses = new ArrayList<>();
     }
+    public void addPedestrian(String pedestrianId, String startRoad, String endRoad) {
+        PedestrianDirection start = PedestrianDirection.valueOf(startRoad.toUpperCase());
+        PedestrianDirection end = PedestrianDirection.valueOf(endRoad.toUpperCase());
+        Pedestrian pedestrian = new Pedestrian(pedestrianId, start, end);
+        Direction associatedRoad = start.getAssociatedRoad();
+        intersection.getCrosswalk(associatedRoad).addPedestrian(pedestrian);
+    }
     public void addVehicle(String vehicleId, String startRoad, String endRoad) {
         Direction start = Direction.valueOf(startRoad.toUpperCase());
         Direction end = Direction.valueOf(endRoad.toUpperCase());
@@ -31,10 +37,12 @@ public class Simulation {
     }
     public void step(){
         intelligentTrafficLights.updateTrafficLights(intersection);
-        List<Vehicle> leftVehicles = intersection.step();
-        List<String> leftVehiclesIds = leftVehicles.stream().map(Vehicle::getVehicleId).toList();
+        IntersectionStepResult result = intersection.step();
+        List<String> leftVehiclesIds = result.getLeftVehicles().stream().map(Vehicle::getVehicleId).collect(Collectors.toList());
+        List<String> crossedPedestriansIds = result.getCrossedPedestrians().stream().map(Pedestrian::getPedestrianId).toList();
         Map<String, List<String>> stepStatus = new HashMap<>();
         stepStatus.put("leftVehicles", leftVehiclesIds);
+        stepStatus.put("crossedPedestrians", crossedPedestriansIds);
         stepStatuses.add(stepStatus);
     }
 
