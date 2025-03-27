@@ -10,8 +10,8 @@ public class TrafficLight {
     private State state;
     @Getter
     private Direction direction;
-    private int greenDuration = 20;
-    private int yellowDuration = 2;
+    private int greenDuration = 1;
+    private int yellowDuration = 0;
     private int timer = 0;
 
     public TrafficLight(Direction direction) {

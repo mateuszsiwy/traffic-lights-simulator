@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class IntelligentTrafficLights {
 
-    public void updateTrafficLigths(Intersection intersection) {
+    public void updateTrafficLights(Intersection intersection) {
         Map<Direction, Road> roads = intersection.getRoads();
 
         Direction directionWithMostVehicles = null;

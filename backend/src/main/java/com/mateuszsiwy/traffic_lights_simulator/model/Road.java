@@ -12,6 +12,7 @@ public class Road {
     private Direction direction;
     @Getter
     private TrafficLight trafficLight;
+    @Getter
     private Queue<Vehicle> vehicles;
 
     public Road(Direction direction) {
@@ -28,7 +29,7 @@ public class Road {
     public List<Vehicle> processTraffic(){
         List<Vehicle> leftVehicles = new ArrayList<>();
 
-        int maxVehiclesForGreenLight = 5;
+        int maxVehiclesForGreenLight = 1;
         if(trafficLight.isGreen() && !vehicles.isEmpty()){
             int vehiclesToProcess = Math.min(vehicles.size(), maxVehiclesForGreenLight);
             for(int i = 0; i < vehiclesToProcess; i++){

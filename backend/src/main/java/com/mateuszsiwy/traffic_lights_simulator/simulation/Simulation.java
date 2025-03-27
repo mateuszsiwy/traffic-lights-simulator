@@ -5,7 +5,6 @@ import com.mateuszsiwy.traffic_lights_simulator.model.Intersection;
 import com.mateuszsiwy.traffic_lights_simulator.model.Vehicle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +29,7 @@ public class Simulation {
         intersection.addVehicle(vehicle);
     }
     public void step(){
-        intelligentTrafficLights.updateTrafficLigths(intersection);
+        intelligentTrafficLights.updateTrafficLights(intersection);
         List<Vehicle> leftVehicles = intersection.step();
         List<String> leftVehiclesIds = leftVehicles.stream().map(Vehicle::getVehicleId).toList();
         Map<String, List<String>> stepStatus = new HashMap<>();
