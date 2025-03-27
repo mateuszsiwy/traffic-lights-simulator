@@ -1,4 +1,4 @@
-package com.mateuszsiwy.traffic_ligths_simulator.model;
+package com.mateuszsiwy.traffic_lights_simulator.model;
 
 public enum Direction {
     NORTH, SOUTH, EAST, WEST;

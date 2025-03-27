@@ -1,4 +1,4 @@
-package com.mateuszsiwy.traffic_ligths_simulator.model;
+package com.mateuszsiwy.traffic_lights_simulator.model;
 
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ public class Vehicle {
     @Getter
     private Direction endRoad;
 
-    public Vehicle(Direction start, Direction end, String vehicleId) {
+    public Vehicle(String vehicleId, Direction start, Direction end) {
         this.startRoad = start;
         this.endRoad = end;
         this.vehicleId = vehicleId;

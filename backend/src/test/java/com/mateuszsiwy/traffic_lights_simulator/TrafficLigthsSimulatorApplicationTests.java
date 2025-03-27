@@ -1,4 +1,4 @@
-package com.mateuszsiwy.traffic_ligths_simulator;
+package com.mateuszsiwy.traffic_lights_simulator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

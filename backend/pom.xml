@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mateuszsiwy</groupId>
-	<artifactId>traffic-ligths-simulator</artifactId>
+	<artifactId>traffic-lights-simulator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>traffic-ligths-simulator</name>
+	<name>traffic-lights-simulator</name>
 	<description>Intelligent traffic lights simulator</description>
 	<url/>
 	<licenses>
@@ -62,16 +62,17 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-maven-plugin</artifactId>
+			    <configuration>
+			        <mainClass>com.mateuszsiwy.traffic_lights_simulator.TrafficLightsSimulatorApplication</mainClass>
+			        <excludes>
+			            <exclude>
+			                <groupId>org.projectlombok</groupId>
+			                <artifactId>lombok</artifactId>
+			            </exclude>
+			        </excludes>
+			    </configuration>
 			</plugin>
 		</plugins>
 	</build>
