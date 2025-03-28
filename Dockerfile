@@ -7,7 +7,7 @@ COPY backend /app/backend
 WORKDIR /app/backend
 RUN rm -rf target
 
-RUN ./mvnw clean package
+RUN ./mvnw clean package --no-transfer-progress
 
 COPY backend/target/traffic-lights-simulator-0.0.1-SNAPSHOT.jar /app/traffic-lights-simulator-0.0.1-SNAPSHOT.jar
 
