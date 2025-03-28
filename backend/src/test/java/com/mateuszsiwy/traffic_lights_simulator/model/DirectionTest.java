@@ -10,7 +10,7 @@ public class DirectionTest {
         direction = Direction.NORTH;
     }
     @Test
-    public void testGetOpposite() {
+    public void givenDirection_whenGetOpposite_thenReturnsCorrectOpposite() {
         assert(direction.getOpposite() == Direction.SOUTH);
         direction = Direction.SOUTH;
         assert(direction.getOpposite() == Direction.NORTH);

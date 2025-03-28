@@ -11,13 +11,13 @@ public class RoadTest {
     }
 
     @Test
-    public void testAddVehicle() {
+    public void givenVehicle_whenAddVehicle_thenVehicleIsAddedToRoad() {
         Vehicle vehicle = new Vehicle("vehicleTest", Direction.NORTH, Direction.SOUTH);
         road.addVehicle(vehicle);
         assert(road.getVehicles().contains(vehicle));
     }
     @Test
-    public void testGetNumberOfVehicles() {
+    public void givenMultipleVehicles_whenGetNumberOfVehicles_thenReturnsCorrectCount() {
         Vehicle vehicle = new Vehicle("vehicleTest", Direction.NORTH, Direction.SOUTH);
         Vehicle vehicle2 = new Vehicle("vehicleTest2", Direction.NORTH, Direction.SOUTH);
         road.addVehicle(vehicle);
@@ -25,7 +25,7 @@ public class RoadTest {
         assert(road.getNumberOfVehicles() == 2);
     }
     @Test
-    public void testProcessTraffic() {
+    public void givenGreenLightAndVehicles_whenProcessTraffic_thenProcessesAtMostOneVehicle() {
         Vehicle vehicle = new Vehicle("vehicleTest", Direction.NORTH, Direction.SOUTH);
         Vehicle vehicle2 = new Vehicle("vehicleTest2", Direction.NORTH, Direction.SOUTH);
         road.getTrafficLight().setState(TrafficLight.State.GREEN);

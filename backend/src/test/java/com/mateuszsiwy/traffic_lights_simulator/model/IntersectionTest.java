@@ -16,14 +16,14 @@ public class IntersectionTest {
     }
 
     @Test
-    void testAddVehicle(){
+    void givenVehicle_whenAddVehicle_thenVehicleIsAddedToRoad() {
         Vehicle vehicle = new Vehicle("vehicleTest", Direction.NORTH, Direction.SOUTH);
         intersection.addVehicle(vehicle);
         assert(intersection.getRoad(Direction.NORTH).getVehicles().contains(vehicle));
     }
 
     @Test
-    void testStep(){
+    void givenGreenLightAndVehicle_whenStep_thenVehicleLeavesIntersection() {
         Vehicle vehicle = new Vehicle("vehicleTest", Direction.NORTH, Direction.SOUTH);
         Road road = intersection.getRoad(Direction.NORTH);
         TrafficLight trafficLight = road.getTrafficLight();
