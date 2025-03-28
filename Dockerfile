@@ -5,6 +5,7 @@ WORKDIR /app
 COPY backend /app/backend
 
 WORKDIR /app/backend
+RUN rm -rf target
 
 RUN ./mvnw clean package
 
