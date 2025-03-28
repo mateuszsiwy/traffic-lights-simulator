@@ -21,6 +21,7 @@ public class RoadTest {
         Vehicle vehicle = new Vehicle("vehicleTest", Direction.NORTH, Direction.SOUTH);
         Vehicle vehicle2 = new Vehicle("vehicleTest2", Direction.NORTH, Direction.SOUTH);
         road.addVehicle(vehicle);
+        road.addVehicle(vehicle2);
         assert(road.getNumberOfVehicles() == 2);
     }
     @Test
