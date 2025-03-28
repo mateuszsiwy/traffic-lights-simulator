@@ -31,11 +31,11 @@ public enum PedestrianDirection {
     public Direction getCrosswalkDirection() {
         switch (this) {
             case NORTH_EAST:
-            case NORTH_WEST:
-                return Direction.NORTH;
-            case SOUTH_WEST:
             case SOUTH_EAST:
-                return Direction.SOUTH;
+                return Direction.EAST;
+            case NORTH_WEST:
+            case SOUTH_WEST:
+                return Direction.WEST;
             default:
                 throw new IllegalStateException("Unexpected pedestrian direction: " + this);
         }

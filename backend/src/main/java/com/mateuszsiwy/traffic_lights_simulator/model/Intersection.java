@@ -59,7 +59,6 @@ public class Intersection {
         List<Vehicle> leftVehicles = new ArrayList<>();
         List<Pedestrian> crossedPedestrians = new ArrayList<>();
 
-        // Process traffic and pedestrians
         for (Road road : roads.values()) {
             leftVehicles.addAll(road.processTraffic());
         }
@@ -68,7 +67,6 @@ public class Intersection {
             crossedPedestrians.addAll(crosswalk.processCrossing());
         }
 
-        // Update lights
         for (Road road : roads.values()) {
             road.getTrafficLight().update();
         }
@@ -77,7 +75,6 @@ public class Intersection {
             crosswalk.getPedestrianLight().update();
         }
 
-        // Update weights
         for (Road road : roads.values()) {
             road.updateVehicleWeights();
         }

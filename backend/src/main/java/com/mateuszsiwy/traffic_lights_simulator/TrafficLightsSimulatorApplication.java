@@ -4,39 +4,54 @@ import com.mateuszsiwy.traffic_lights_simulator.command.Command;
 import com.mateuszsiwy.traffic_lights_simulator.io.JsonReader;
 import com.mateuszsiwy.traffic_lights_simulator.io.JsonWriter;
 import com.mateuszsiwy.traffic_lights_simulator.simulation.Simulation;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 
-import java.io.IOException;
 import java.util.List;
 
 @SpringBootApplication
 public class TrafficLightsSimulatorApplication {
 
-	public static void main(String[] args) {
-		if (args.length < 2){
-			System.out.println("Usage: java -jar traffic-lights-simulator-0.0.1-SNAPSHOT.jar <input_file> <output_file>");
-			return;
-		}
-		String inputFile = args[0];
-		String outputFile = args[1];
-		try{
-			JsonReader reader = new JsonReader();
-			List<Command> commands = reader.readCommands(inputFile);
+    public static void main(String[] args) {
+        SpringApplication.run(TrafficLightsSimulatorApplication.class, args);
+    }
 
-			Simulation simulation = new Simulation();
-			for (Command command : commands) {
-				command.execute(simulation);
-			}
+    @Bean
+    public CommandLineRunner commandLineRunner(JsonReader reader, JsonWriter writer) {
+        return args -> {
+            if (args.length >= 2) {
+                String inputFile = args[0];
+                String outputFile = args[1];
 
-			JsonWriter writer = new JsonWriter();
-			writer.writeResults(simulation.getStepStatuses(), outputFile);
+                try {
+                    List<Command> commands = reader.readCommands(inputFile);
 
-			System.out.println("Simulation finished. Results saved to " + outputFile);
-		} catch (IOException e) {
-			System.err.println("Error: " + e.getMessage());
-			e.printStackTrace();
-        }
-//		SpringApplication.run(TrafficLigthsSimulatorApplication.class, args);
-	}
+                    Simulation simulation = new Simulation();
+                    for (Command command : commands) {
+                        command.execute(simulation);
+                    }
 
+                    writer.writeResults(simulation.getStepStatuses(), outputFile);
+
+                    System.out.println("Simulation finished. Results saved to " + outputFile);
+
+                } catch (Exception e) {
+                    System.err.println("Error: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    @Bean
+    public JsonReader jsonReader() {
+        return new JsonReader();
+    }
+
+    @Bean
+    public JsonWriter jsonWriter() {
+        return new JsonWriter();
+    }
 }

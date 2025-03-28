@@ -26,8 +26,7 @@ public class Simulation {
         PedestrianDirection start = PedestrianDirection.valueOf(startRoad.toUpperCase());
         PedestrianDirection end = PedestrianDirection.valueOf(endRoad.toUpperCase());
         Pedestrian pedestrian = new Pedestrian(pedestrianId, start, end);
-        Direction associatedRoad = start.getAssociatedRoad();
-        intersection.getCrosswalk(associatedRoad).addPedestrian(pedestrian);
+        intersection.addPedestrian(pedestrian);
     }
     public void addVehicle(String vehicleId, String startRoad, String endRoad) {
         Direction start = Direction.valueOf(startRoad.toUpperCase());

@@ -41,32 +41,40 @@ public class Crosswalk {
         List<Pedestrian> crossedPedestrians = new ArrayList<>();
 
         if (pedestrianLight.isGreen() && !pedestrians.isEmpty()) {
-            int maxPedestriansPerCycle = 3;
-            List<Pedestrian> processedPedestrians = new ArrayList<>();
-
+            int maxPedestriansPerCycle = 1;
             int processedCount = 0;
+            List<Pedestrian> toRemove = new ArrayList<>();
+
             for (Pedestrian pedestrian : pedestrians) {
                 if (processedCount >= maxPedestriansPerCycle) {
                     break;
                 }
 
-                if (direction == Direction.NORTH || direction == Direction.SOUTH) {
+                boolean shouldProcess = false;
+
+                if ((direction == Direction.NORTH || direction == Direction.SOUTH) &&
+                    pedestrian.needsToGoHorizontal() &&
+                    pedestrian.getHorizontalCrosswalkDirection() == direction) {
                     pedestrian.markHorizontalCrossed();
-                } else {
+                    shouldProcess = true;
+                } else if ((direction == Direction.EAST || direction == Direction.WEST) &&
+                           pedestrian.needsToGoVertical() &&
+                           pedestrian.getVerticalCrosswalkDirection() == direction) {
                     pedestrian.markVerticalCrossed();
+                    shouldProcess = true;
                 }
 
-                processedPedestrians.add(pedestrian);
-                processedCount++;
+                if (shouldProcess) {
+                    processedCount++;
 
-                if (pedestrian.hasCompletedCrossing()) {
-                    crossedPedestrians.add(pedestrian);
+                    if (pedestrian.hasCompletedCrossing()) {
+                        toRemove.add(pedestrian);
+                        crossedPedestrians.add(pedestrian);
+                    }
                 }
             }
 
-            pedestrians.removeAll(processedPedestrians);
-
-
+            pedestrians.removeAll(toRemove);
         }
 
         return crossedPedestrians;

@@ -24,7 +24,6 @@ public class Pedestrian {
         this.destination = destination;
     }
 
-    // Determine if this pedestrian needs to cross horizontally (East-West)
     public boolean needsToGoHorizontal() {
         return (origin == PedestrianDirection.NORTH_EAST && destination == PedestrianDirection.NORTH_WEST) ||
                (origin == PedestrianDirection.NORTH_WEST && destination == PedestrianDirection.NORTH_EAST) ||
