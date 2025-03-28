@@ -1,107 +1,42 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 import './App.css';
-import IntersectionVisualizer from './components/IntersectionVisualizer';
-import SimulationControls from './components/SimulationControls';
-import SimulationHistory from './components/SimulationHistory';
-import CommandPanel from './components/CommandPanel';
 
 function App() {
-    const [simulationData, setSimulationData] = useState(null);
-    const [commands, setCommands] = useState([]);
-    const [currentStep, setCurrentStep] = useState(0);
+    const [file, setFile] = useState(null);
+    const [output, setOutput] = useState(null);
 
-    const runSimulation = async () => {
-        try {
-            const response = await fetch('http://localhost:8080/api/simulation/run', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({commands}),
-            });
-
-            const data = await response.json();
-            setSimulationData(data);
-            setCurrentStep(0);
-        } catch (error) {
-            console.error('Error running simulation:', error);
-        }
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
     };
 
-    const addCommand = (command) => {
-        setCommands([...commands, command]);
-    };
-
-    const navigateStep = (step) => {
-        if (simulationData && step >= 0 && step < simulationData.stepStatuses.length) {
-            setCurrentStep(step);
-        }
-    };
-
-    const handleFileUpload = async (file) => {
+    const handleUpload = async () => {
         const formData = new FormData();
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://localhost:8080/api/simulation/upload', {
-                method: 'POST',
-                body: formData,
+            const response = await axios.post('http://localhost:8080/api/simulation/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
-
-            const data = await response.json();
-            setSimulationData(data);
-            setCurrentStep(0);
+            setOutput(response.data);
         } catch (error) {
             console.error('Error uploading file:', error);
         }
     };
 
     return (
-        <div className="app">
-            <header>
-                <h1>Symulator Skrzyżowania z Sygnalizacją Świetlną</h1>
-            </header>
-
-            <div className="app-container">
-                <div className="left-panel">
-                    <CommandPanel
-                        commands={commands}
-                        addCommand={addCommand}
-                        runSimulation={runSimulation}
-                        handleFileUpload={handleFileUpload}
-                    />
+        <div className="App">
+            <h1>Traffic Lights Simulator</h1>
+            <input type="file" onChange={handleFileChange}/>
+            <button onClick={handleUpload}>Upload</button>
+            {output && (
+                <div>
+                    <h2>Output:</h2>
+                    <pre>{JSON.stringify(output, null, 2)}</pre>
                 </div>
-
-                <div className="center-panel">
-                    {simulationData ? (
-                        <IntersectionVisualizer
-                            data={simulationData.stepStatuses[currentStep]}
-                            step={currentStep}
-                        />
-                    ) : (
-                        <div className="empty-state">
-                            <p>Dodaj komendy lub wczytaj plik JSON, aby uruchomić symulację</p>
-                        </div>
-                    )}
-                </div>
-
-                <div className="right-panel">
-                    {simulationData && (
-                        <>
-                            <SimulationControls
-                                currentStep={currentStep}
-                                totalSteps={simulationData.stepStatuses.length}
-                                onNavigate={navigateStep}
-                            />
-                            <SimulationHistory
-                                data={simulationData.stepStatuses}
-                                currentStep={currentStep}
-                                onSelectStep={navigateStep}
-                            />
-                        </>
-                    )}
-                </div>
-            </div>
+            )}
         </div>
     );
 }
